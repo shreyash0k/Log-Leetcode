@@ -17,3 +17,6 @@ class Solution:
             return memo[i]
         
         return helper(0)
+
+# time complexity - o(n) 
+# space complexity - o(n)
