@@ -39,3 +39,5 @@ class Solution:
 # why 3^L? because from each cell we have at most 3 directions to explore for each character in the word
 
 # space complexity : O(L) where L is the length of the word due to recursion stack
+# space used for marking visited cells is O(1) since we are modifying the board in place
+# overall space complexity is O(L)
