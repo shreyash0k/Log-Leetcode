@@ -1,52 +1,39 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        freshOranges = 0 
-        rows = len(grid)
-        cols = len(grid[0])
-
-        rottenQueue = deque() 
-
-        for i in range(rows):
-            for j in range(cols):
-                if grid[i][j] == 1:
-                    freshOranges += 1
-                elif grid[i][j] == 2:
-                    rottenQueue.append((i,j))
         
-        if freshOranges == 0:
-            return 0
+        rows,cols = len(grid),len(grid[0])
+        fresh_oranges = 0 
+        queue = deque()
+        minutes = 0 
+        directions = [(0,-1),(0,1),(-1,0),(1,0)]
+        
+        for row in range(rows):
+            for col in range(cols):
+                if (grid[row][col]==1):
+                    fresh_oranges += 1
+                elif(grid[row][col]==2):
+                    queue.append((row,col))
 
-        totalTime = 0 
-        while rottenQueue and freshOranges >0:
-            size = len(rottenQueue)
-            for _ in range(size):
-                r,c = rottenQueue.popleft() 
-                if c-1>=0 and grid[r][c-1] == 1:
-                    freshOranges-=1
-                    rottenQueue.append((r,c-1))
-                    grid[r][c-1] = 2
+        if fresh_oranges == 0:
+            return 0 
+            
+        while queue:
+            if fresh_oranges<=0:
+                return minutes 
+            
+            for i in range(len(queue)):
+                row,col = queue.popleft()
+                for dr,dc in directions:
+                    new_row = dr+row
+                    new_col = dc+col
+                    if (0<=new_row<rows and 0<=new_col<cols and grid[new_row][new_col]==1):
+                        grid[new_row][new_col] = 2 
+                        queue.append((new_row,new_col))
+                        fresh_oranges-=1
+            
+            minutes+=1
                 
-                if c+1<cols and grid[r][c+1] == 1:
-                    freshOranges-=1 
-                    rottenQueue.append((r,c+1))
-                    grid[r][c+1] = 2 
-
-                if r-1>=0 and grid[r-1][c] == 1:
-                    freshOranges-=1 
-                    rottenQueue.append((r-1,c))
-                    grid[r-1][c] = 2 
-
-                if r+1<rows and grid[r+1][c] == 1:
-                    freshOranges-=1 
-                    rottenQueue.append((r+1,c))
-                    grid[r+1][c] = 2 
-            totalTime+=1 
-        
-        if freshOranges > 0:
-            return -1
-        
-        return totalTime 
-                
+        return -1     
 
 # time complexity: O(M*N) where M is number of rows and N is number of columns
 # space complexity: O(M*N) in the worst case where all oranges are rotten and we have to store all of them in the queue
