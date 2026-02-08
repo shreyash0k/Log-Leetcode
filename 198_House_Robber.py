@@ -1,22 +1,17 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        total_house = len(nums)
+        if total_house==1:
+            return nums[0]
         memo = {}
-        def helper(i):
-            if i>=len(nums):
+        def dfs(position):
+            if position>=total_house:
                 return 0
-            
-            if i in memo:
-                return memo[i]
+            if position in memo:
+                return memo[position]
+            memo[position] = nums[position]+ max(dfs(position+2),dfs(position+3))
+            return memo[position]
+        return max(dfs(0),dfs(1))
 
-            rob_current = nums[i] + helper(i+2)
-            
-            skip_current = helper(i+1)
-
-            memo[i] = max(rob_current,skip_current)
-
-            return memo[i]
-        
-        return helper(0)
-
-# time complexity - o(n) 
-# space complexity - o(n)
+# tc O(n) where n is total houses 
+# sc O(n) we will store max robbery on each house + recursion stack will be O(n)
