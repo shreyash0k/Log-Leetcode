@@ -1,0 +1,25 @@
+Problem 
+So imagine you're on the Google Ads team. When an advertiser creates a campaign, they set a specific daily budget — say $500. Our system needs to find exactly two ad placements from a list of available slots, where the combined cost of those two placements hits the advertiser's budget exactly. We want to return which two placements those are so we can auto-fill the campaign. For example, if we have placement costs like $200, $700, $300, and the budget is $500, we'd pair the $200 and $300 slots. How would you design a function to do this?
+
+Code - 
+# slots = [200, 700, 300]
+# target = 500
+# otuput = 
+findPair(slots, target):
+	# if there are less than 2 slots return -1 
+	if len(slots)<2:
+		return (-1,-1)
+	# create an empty hashmap with key as cost and value as index
+	hashSlots = {}
+	
+	# go over list of items and check if target - current exists in hashmap 
+	for i in range(0,len(slots)):
+		if target - slots[i] in hashSlots: 
+			return (i, hashSlots[target - slots[i]))
+		hashSlots[slots[i]] = i     
+	
+	# if nothing found return -1,-1
+	return (-1,-1)
+
+# tc: we are going over full list of inputs, so O(n) for that. for each input we check if other pair exist in hashmap. HashMap lookup is O(1). storing is also O(1)
+#sc is O(n) because we might store all unique costs in hashmap. 
