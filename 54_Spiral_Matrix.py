@@ -1,26 +1,38 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        
+        left = 0
+        right = len(matrix[0])
+        top = 0
+        bottom = len(matrix)    
         result = []
-        directions = [[0,1],[1,0],[0,-1],[-1,0]]
-        visited = set()
-        rows = len(matrix)
-        cols = len(matrix[0])
 
-        def dfs(row,col,d):
-            result.append(matrix[row][col])
-            visited.add((row,col))
+        while left<right and top<bottom:
+            # process top row
+            for i in range(left,right):
+                result.append(matrix[top][i])   # 1,2,3
+            top+=1
 
-            for i in range(4):
-                nd = (d + i) %4
-                dr, dc = directions[nd]
-                new_row = dr + row
-                new_col = dc + col 
+            # process right col
+            for i in range(top,bottom):
+                result.append(matrix[i][right-1]) #  1,2,3,6,9
+            right-=1
 
-                if (0<=new_row<rows and 0<=new_col<cols and (new_row,new_col) not in visited):
-                    dfs(new_row,new_col,nd)
-                    return
-        dfs(0,0,0)
+            # edge case 
+            if (left<right and top<bottom) != True:
+                break
+            
+            #process bottom row
+            for i in range(right-1,left-1,-1):
+                result.append(matrix[bottom-1][i])
+            bottom-=1
+            
+            # process left col
+            for i in range(bottom-1,top-1,-1):
+                result.append(matrix[i][left])
+            left+=1
+        
         return result
 
-        # O(m*n) time
-        # O(m*n) space 
+        # O(m*n)
+        # O(m*n)
