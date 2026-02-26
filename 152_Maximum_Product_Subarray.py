@@ -1,21 +1,17 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         
-        # maintain minProduct and maxProduct 
-        # go over input list and comput minProduct and maxProduct at each step
-        # maxProduct = max(num,num*prevMaxProduct,num*prevMinProduct)
-        # minProduct = min(num,num*prevMaxProduct,num*prevMinProduct)
+        n = len(nums)
+        maxDP = [0] * n 
+        minDP = [0] * n
+        maxDP[0] = nums[0]
+        minDP[0] = nums[0]
 
-        maxProduct = 1 
-        minProduct = 1
-        result = -1e9
-        for num in nums:
-            prevMaxProduct = maxProduct
-            maxProduct = max(num, maxProduct*num, minProduct*num)   
-            minProduct = min(num, prevMaxProduct*num, minProduct*num)
-            result = max(maxProduct,minProduct,result)
+        for i in range(1,n):
+            maxDP[i] = max(nums[i], nums[i] * maxDP[i-1], nums[i] * minDP[i-1])
+            minDP[i] = min(nums[i], nums[i] * maxDP[i-1], nums[i] * minDP[i-1])
         
-        return result
-
-        # tc O(n)
-        # sc O(1)
+        return max(maxDP)
+    
+    # O(n)
+    # O(n)
