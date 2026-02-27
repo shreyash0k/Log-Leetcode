@@ -1,12 +1,14 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        n = len(nums)
-        dp =[1 for _ in range(n)]
-        for i in range(1,n):
-            for j in range(0,i):
-                if nums[j]<nums[i]:
-                    dp[i] = max(dp[i],dp[j]+1)        
-        return max(dp)
+        
+        lis = [1]*len(nums)
+
+        for i in range(len(nums)-2,-1,-1):   
+            for j in range(i+1,len(nums)):
+                if nums[i]<nums[j]:
+                    lis[i] = max(lis[i], 1 + lis[j])
                 
-# tc o(n^2)
-# sc o(n)
+        return max(lis)
+
+# tc O(n^2)
+# sc O(n)
