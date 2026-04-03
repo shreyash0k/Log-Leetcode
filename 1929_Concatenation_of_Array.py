@@ -1,10 +1,6 @@
 class Solution:
     def getConcatenation(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        ans = [0]*(n*2)
-        for i in range(n*2):
-            ans[i] = nums[i%n]
-        return ans 
+        return nums+nums
 
-# TIME COMPLEXITY: O(n)
-# SPACE COMPLEXITY: O(n)
+# tc O(2n) because we are creating a new list of size 2n
+# sc O(2n) because we are creating a new list of size 2n
