@@ -1,20 +1,18 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        solution = [0] * 26 
-        if len(s)!=len(t):
-            return False
-        
-        for i in s:
-            solution[ord(i)-ord('a')] = solution[ord(i)-ord('a')] + 1 
+        letters = [0]*26
 
-        for i in t:
-            solution[ord(i)-ord('a')] = solution[ord(i)-ord('a')] - 1 
+        for char in s:
+            letters[ord(char) - ord('a')]+=1
         
-        for i in solution:
-            if i!=0:
-                return False 
+        for char in t:
+            letters[ord(char)- ord('a')]-=1
+        
+        for val in letters:
+            if val!=0:
+                return False
+        
+        return True
 
-        return True 
-        
-# time complexity o(n)
-# space complexity o(26)
+# tc O(n) because we are iterating through the strings once. O(3n) = O(n)
+# sc O(26) because we are creating a new list of size 26
