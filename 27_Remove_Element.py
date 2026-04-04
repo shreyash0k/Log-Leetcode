@@ -1,11 +1,13 @@
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        k = 0
-        for i in range(len(nums)):
-            if nums[i]!=val:
-                nums[k] = nums[i]
-                k+=1
-        return k
+        valPointer = len(nums)-1
+        countVal = 0
+        for i in range(len(nums)-1,-1,-1):
+            if nums[i] == val:
+                nums[i],nums[valPointer] = nums[valPointer], nums[i]
+                countVal+=1
+                valPointer-=1    
+        return len(nums) - countVal
 
-# O(n)
-# O(1)
+# tc O(n) because we are iterating through the list once
+# sc O(1) because we are not using any extra space
