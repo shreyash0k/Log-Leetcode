@@ -33,3 +33,9 @@ class Solution:
                 return middle
         
         return result 
+
+        # solve using built in function
+        return int(x**0.5)
+
+        # tc O(1)
+        # sc O(1)   
